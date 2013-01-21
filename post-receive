@@ -15,7 +15,8 @@
 # Config
 # URI to your FogBugz server
 fogbugzUri=http://myfogbugzserver.com
-showDebug=false
+fogbugzIxRepository=4
+showDebug=true
 
 echo "--------== Starting FogBugz post-receive hook ==----------"
 while read oldrev newrev ref
@@ -82,9 +83,9 @@ do
 					hashBaseParent=`git rev-list --max-count=1 $commitHash^ -- $file_name`
 
 					# Build the FogBugz URI
-					r1="hp=$file_oldsha;hpb=$hashBaseParent"
-					r2="h=$file_newsha;hb=$hashBase"
-					postUri="$fogbugzUri/cvsSubmit.asp?ixBug=$bugId&sFile=$file_name&sPrev=$r1&sNew=$r2&sRepo=$repo" 
+					r1="$hashBaseParent"
+					r2="$hashBase"
+					postUri="$fogbugzUri/cvsSubmit.asp?ixBug=$bugId&sFile=$file_name&sPrev=$r1&sNew=$r2&ixRepository=$fogbugzIxRepository" 
 					
 					# Debug only
 					if [ $showDebug == true ]; then
